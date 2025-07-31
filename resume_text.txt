@@ -1,0 +1,107 @@
+Falls Church, Virginia
+(571) 395-5448
+boernerc20@gmail.com
+
+Christopher Boerner
+Computer Engineer
+
+Computer Engineering Master’s graduate specializing in embedded systems, digital design, and electronics,
+with hands-on experience in FPGA development, PCB design, and hardware/software integration.
+
+U.S. Citizen
+Active Secret Clearance
+Eagle Scout
+linkedin.com/boernerc20
+github.com/boernerc20
+
+Skills
+Languages: Bash, C/C++, Java, MATLAB, Python, Verilog
+Software: Arduino, Cadence Virtuoso, CMake, FreeCAD, Git, KiCad, Linux (Arch), LTSpice, OpenCV, Pandas,
+Qt, SciKit-Learn, STM32Cube, SolidWorks, Xilinx Vivado/Vitis
+Hardware: PCB Design, Breadboarding, Computer Architecture, Oscilloscope, Multimeter, Soldering
+
+Education
+Master of Engineering in Computer Engineering
+Virginia Tech – Focused on Computer Systems – GPA: 3.8
+Advisor: Dr. Cindy Yi (Virginia Tech)
+
+May 2025
+Alexandria, Virginia
+
+Bachelor of Science in Computer Engineering
+Virginia Tech – General Computer Engineering – GPA: 3.6
+
+May 2024
+Blacksburg, Virginia
+
+Technical Experience
+Virginia Tech | Embedded Systems (ECE 2564)
+Grader
+• Graded homework assignments and coding projects.
+• Used C language for TI MSP432 microcontroller-based systems.
+• Collaborated with TAs and the professor to ensure smooth course operations.
+
+Sep 2024 – Dec 2024
+Blacksburg, Virginia
+
+Grenoble Electrical Engineering Laboratory | Expe-SmartHouse Project
+Research Intern
+• Programmed Arduino Mega and ESP8266 microcontrollers to control appliances, display energy usage,
+and publish MQTT messages in a network of scalable smart home mockups.
+• Built a centralized broker system and Python-based energy manager on Raspberry Pi to enable real-time
+power monitoring and coordination with a simulated photovoltaic source.
+
+Jun 2024 – Aug 2024
+Grenoble, France
+
+Deloitte | Cybersecurity Infrastructure Development
+GPS Advisory Cyber Intern
+• Worked with a government client on improving their cybersecurity framework using an identity
+governance and administration solution.
+• Developed visuals and process cycles for a business requirements document.
+• Improved soft skills by participating in conferences and leading presentations.
+
+Jun 2023 – Aug 2023
+Rosslyn, Virginia
+
+Systems Software Research Group | Computer Architecture Research
+Student Researcher
+• Created a script to automatically run complex benchmarks on a FPGA-based heterogeneous computer
+system and collect data.
+• Implemented RISC-V 64-bit architectures on a Xilinx FPGA.
+• Modified the instruction execution phase of the processor to prevent cyber attacks.
+
+Sep 2022 – May 2023
+Blacksburg, Virginia
+
+Projects
+Academic & Professional Projects
+
+Personal Projects
+
+FPGA-Accelerated Echo-State Network (Master’s)
+Nov 2024 – May 2025
+• Developed a floating-point ESN and online RLS trainer on a Zynq
+SoC for 2×2 MIMO-OFDM channel prediction.
+• Enabled real-time dataset streaming via Ethernet and achieved
+sub-1 ms radio inference with UART performance feedback.
+
+Minecraft Jukebox Replica
+Jun 2025 – Present
+• Designing a custom PCB for power delivery, RFID sensing, and
+analog audio amplification/output.
+• 3D printed functional jukebox and game-inspired discs; inserts
+trigger playback of soundtracks via embedded RFID tags.
+
+Aircraft Data Acquisition Device (Senior Design)
+Aug 2023 – May 2024
+• Designed a modular sensor system with custom PCBs and FFTcapable firmware for audio, vibration, and temp/humidity data.
+• Developed STM32 and Artemis firmware for RF communication,
+SD logging, and touchscreen UI in rugged, battery-powered enclosures.
+
+FPV Drone Design and Build
+May 2023 – Aug 2023
+• Assembled a 5" FPV drone from preselected parts; soldered electronics and configured GPS telemetry with battery fail-safes.
+• Set up ELRS radio link and PID tuning; captured stabilized GoPro footage for social media content.
+
+
