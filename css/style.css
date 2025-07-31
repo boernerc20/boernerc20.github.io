@@ -604,10 +604,11 @@ section {
 .shape {
     position: absolute;
     border-radius: 50%;
-    opacity: 0.3;
+    opacity: 0.2;
     animation: float 12s ease-in-out infinite;
     filter: blur(2px);
     pointer-events: none;
+    transition: all 0.3s ease;
 }
 
 .shape-1 {
@@ -615,7 +616,7 @@ section {
     height: 140px;
     background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
     top: 5%;
-    right: 5%;
+    right: 15%;
     animation-delay: 0s;
 }
 
@@ -624,7 +625,7 @@ section {
     height: 100px;
     background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
     bottom: 10%;
-    left: 5%;
+    left: 15%;
     animation-delay: 2s;
 }
 
@@ -633,7 +634,7 @@ section {
     height: 80px;
     background: linear-gradient(135deg, var(--accent-cyan), var(--primary-color));
     top: 30%;
-    left: 8%;
+    left: 12%;
     animation-delay: 4s;
 }
 
@@ -642,8 +643,14 @@ section {
     height: 60px;
     background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
     bottom: 25%;
-    right: 8%;
+    right: 18%;
     animation-delay: 6s;
+}
+
+/* Dynamic shapes will be positioned via JavaScript */
+.shape.dynamic {
+    opacity: 0.15;
+    animation-duration: 15s;
 }
 
 @keyframes float {

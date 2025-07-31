@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initContactForm();
     initSmoothScroll();
     initParallaxEffects();
+    initDynamicShapes();
 });
 
 // Theme Toggle functionality
@@ -673,6 +674,164 @@ if ('performance' in window) {
             const loadTime = perfData.loadEventEnd - perfData.navigationStart;
             console.log(`Page load time: ${loadTime}ms`);
         }, 0);
+    });
+}
+
+// Dynamic Shape Generation
+function initDynamicShapes() {
+    const floatingShapesContainer = document.querySelector('.floating-shapes');
+    if (!floatingShapesContainer) return;
+
+    const gradients = [
+        'linear-gradient(135deg, var(--primary-color), var(--primary-dark))',
+        'linear-gradient(135deg, var(--accent-pink), var(--accent-purple))',
+        'linear-gradient(135deg, var(--accent-cyan), var(--primary-color))',
+        'linear-gradient(135deg, var(--accent-purple), var(--accent-pink))',
+        'linear-gradient(135deg, var(--primary-dark), var(--accent-cyan))',
+        'linear-gradient(135deg, var(--accent-purple), var(--primary-color))'
+    ];
+
+    let dynamicShapes = [];
+    let resizeTimeout;
+
+    function createShape(index) {
+        const shape = document.createElement('div');
+        shape.className = 'shape dynamic';
+        
+        // Random size between 40px and 120px
+        const size = Math.random() * 80 + 40;
+        shape.style.width = `${size}px`;
+        shape.style.height = `${size}px`;
+        
+        // Random gradient
+        const gradient = gradients[Math.floor(Math.random() * gradients.length)];
+        shape.style.background = gradient;
+        
+        // Get full hero section dimensions for positioning
+        const heroSection = document.querySelector('.hero');
+        const heroContainer = document.querySelector('.hero-container');
+        const heroSectionRect = heroSection.getBoundingClientRect();
+        const heroContainerRect = heroContainer.getBoundingClientRect();
+        
+        // Calculate text area to avoid (center area around the hero content)
+        const textAreaWidth = heroContainerRect.width + 100; // Hero container width + padding
+        const textAreaHeight = heroContainerRect.height + 50; // Hero container height + padding
+        
+        // Center of the hero section
+        const centerX = heroSectionRect.width / 2;
+        const centerY = heroSectionRect.height / 2;
+        
+        // Define exclusion zone around text (relative to hero section)
+        const excludeLeft = centerX - textAreaWidth / 2;
+        const excludeRight = centerX + textAreaWidth / 2;
+        const excludeTop = centerY - textAreaHeight / 2;
+        const excludeBottom = centerY + textAreaHeight / 2;
+        
+        let x, y;
+        let attempts = 0;
+        const maxAttempts = 50;
+        
+        do {
+            // Generate random position within full hero section
+            x = Math.random() * (heroSectionRect.width - size);
+            y = Math.random() * (heroSectionRect.height - size);
+            attempts++;
+        } while (
+            attempts < maxAttempts &&
+            x + size > excludeLeft && 
+            x < excludeRight && 
+            y + size > excludeTop && 
+            y < excludeBottom
+        );
+        
+        // If we couldn't find a good spot, force it to the edges
+        if (attempts >= maxAttempts) {
+            if (Math.random() > 0.5) {
+                // Place on left or right edge
+                x = Math.random() > 0.5 ? 
+                    Math.random() * excludeLeft : 
+                    excludeRight + Math.random() * (heroSectionRect.width - excludeRight - size);
+                y = Math.random() * (heroSectionRect.height - size);
+            } else {
+                // Place on top or bottom edge
+                y = Math.random() > 0.5 ? 
+                    Math.random() * excludeTop : 
+                    excludeBottom + Math.random() * (heroSectionRect.height - excludeBottom - size);
+                x = Math.random() * (heroSectionRect.width - size);
+            }
+        }
+        
+        // Convert to percentage for responsive positioning relative to hero section
+        shape.style.left = `${(x / heroSectionRect.width) * 100}%`;
+        shape.style.top = `${(y / heroSectionRect.height) * 100}%`;
+        
+        // Random animation delay
+        shape.style.animationDelay = `${Math.random() * 8}s`;
+        
+        // Add some variance to animation duration
+        shape.style.animationDuration = `${12 + Math.random() * 6}s`;
+        
+        return shape;
+    }
+
+    function updateShapes() {
+        // Clear existing dynamic shapes
+        dynamicShapes.forEach(shape => shape.remove());
+        dynamicShapes = [];
+        
+        // Calculate number of shapes based on available space around text
+        const heroSection = document.querySelector('.hero');
+        const heroContainer = document.querySelector('.hero-container');
+        
+        if (!heroSection || !heroContainer) return;
+        
+        const heroSectionRect = heroSection.getBoundingClientRect();
+        const heroContainerRect = heroContainer.getBoundingClientRect();
+        
+        const screenArea = heroSectionRect.width * heroSectionRect.height;
+        
+        // Calculate text area
+        const textArea = (heroContainerRect.width + 100) * (heroContainerRect.height + 50);
+        
+        // Available area for shapes (hero section area minus text area)
+        const availableArea = screenArea - textArea;
+        
+        // Calculate shapes based on available area
+        let numShapes = Math.floor(availableArea / 120000); // One shape per ~120k pixels
+        
+        // Set reasonable bounds based on screen width
+        const screenWidth = window.innerWidth;
+        if (screenWidth >= 1600) {
+            numShapes = Math.max(numShapes, 8);
+            numShapes = Math.min(numShapes, 15);
+        } else if (screenWidth >= 1200) {
+            numShapes = Math.max(numShapes, 6);
+            numShapes = Math.min(numShapes, 12);
+        } else if (screenWidth >= 768) {
+            numShapes = Math.max(numShapes, 3);
+            numShapes = Math.min(numShapes, 8);
+        } else if (screenWidth >= 480) {
+            numShapes = Math.max(numShapes, 1);
+            numShapes = Math.min(numShapes, 4);
+        } else {
+            numShapes = 0; // Very small screens get no extra shapes
+        }
+        
+        // Create and add dynamic shapes
+        for (let i = 0; i < numShapes; i++) {
+            const shape = createShape(i);
+            dynamicShapes.push(shape);
+            floatingShapesContainer.appendChild(shape);
+        }
+    }
+
+    // Initial shape creation
+    updateShapes();
+    
+    // Update shapes on window resize (debounced)
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(updateShapes, 300);
     });
 }
 
