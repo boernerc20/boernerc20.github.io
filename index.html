@@ -37,17 +37,17 @@
             <div class="nav-right">
                 <ul class="nav-menu" id="nav-menu">
                     <li class="nav-item">
-                        <a href="#about" class="nav-link">About</a>
+                        <a href="#about" class="nav-link">about</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#experience" class="nav-link">Experience</a>
+                        <a href="#experience" class="nav-link">experience</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#projects" class="nav-link">Projects</a>
+                        <a href="#projects" class="nav-link">projects</a>
                     </li>
                 </ul>
                 <a href="resume.pdf" class="resume-btn" download="Chris_Boerner_Resume.pdf">
-                    <span class="resume-text">Resume</span>
+                    <span class="resume-text">resume</span>
                     <svg class="resume-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                         <polyline points="7,10 12,15 17,10"/>
@@ -101,6 +101,24 @@
                             <circle cx="4" cy="4" r="2"/>
                         </svg>
                     </a>
+                    <a href="https://www.youtube.com/@krizzfpv" class="social-link" title="Drone YouTube Channel">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <!-- Drone body -->
+                            <rect x="9" y="10" width="6" height="4" rx="1"/>
+                            <!-- Camera gimbal -->
+                            <circle cx="12" cy="12" r="1.5"/>
+                            <!-- Propellers -->
+                            <circle cx="6" cy="6" r="2" stroke-width="1.5"/>
+                            <circle cx="18" cy="6" r="2" stroke-width="1.5"/>
+                            <circle cx="6" cy="18" r="2" stroke-width="1.5"/>
+                            <circle cx="18" cy="18" r="2" stroke-width="1.5"/>
+                            <!-- Arms -->
+                            <line x1="9" y1="10" x2="6" y2="8"/>
+                            <line x1="15" y1="10" x2="18" y2="8"/>
+                            <line x1="9" y1="14" x2="6" y2="16"/>
+                            <line x1="15" y1="14" x2="18" y2="16"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
@@ -113,18 +131,18 @@
     <section class="about" id="about">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">About Me</h2>
-                <p class="section-subtitle">Get to know me better</p>
+                <h2 class="section-title">about me</h2>
+                <p class="section-subtitle">{ get to know me better }</p>
             </div>
             <div class="about-content">
                 <div class="about-main">
                     <div class="about-text">
                         <p>
-                            FILL IN
-                        </p>
-                        <p>
-                            When I'm not working, you can find me exploring new technologies, contributing to open source projects, 
-                            or traveling to new destinations around the world.
+                            I'm a Computer Engineering Master's graduate from Virginia Tech with expertise spanning embedded systems, 
+                            FPGA development, and other hardware solutions. My professional journey has taken me from computer architecture design
+                            to smart home energy systems in France, always focused on bridging hardware and software to solve real-world problems. 
+                            When I'm not coding or designing circuits, I'm capturing cinematic drone footage for my YouTube channel, tinkering with electronics, 
+                            hitting the gym, and exploring new destinations around the globe.
                         </p>
                     </div>
                     <div class="about-image">
@@ -132,18 +150,23 @@
                     </div>
                 </div>
                 
-                <!-- Travel Map Placeholder -->
-                <div class="travel-map-placeholder">
-                    <h3>Places I've Visited</h3>
-                    <div class="map-placeholder">
-                        <div class="placeholder-content">
-                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                <circle cx="12" cy="10" r="3"/>
-                            </svg>
-                            <p>Interactive World Travel Map</p>
-                            <span>Coming Soon</span>
+                <!-- Travel Map -->
+                <div class="travel-map">
+                    <div class="travel-header">
+                        <h3>places i've visited</h3>
+                        <div class="travel-stats">
+                            <div class="stat-item">
+                                <span class="stat-number" data-target="29">0</span>
+                                <span class="stat-label">Countries</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" data-target="5">0</span>
+                                <span class="stat-label">Continents</span>
+                            </div>
                         </div>
+                    </div>
+                    <div class="map-container">
+                        <div id="map_div" style="width: 100%;"></div>
                     </div>
                 </div>
             </div>
@@ -154,8 +177,8 @@
     <section class="experience" id="experience">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Where I've Worked</h2>
-                <p class="section-subtitle">My professional journey</p>
+                <h2 class="section-title">where i've worked</h2>
+                <p class="section-subtitle">{ my professional journey }</p>
             </div>
             <div class="experience-content">
                 <div class="experience-tabs">
@@ -245,7 +268,7 @@
                     <div class="tab-panel" id="panel-3" role="tabpanel" aria-labelledby="tab-3">
                         <h3 class="job-title">
                             Student Researcher
-                            <span class="company">@ Self-Employed</span>
+                            <span class="company">@ Systems Software Research Group</span>
                         </h3>
                         <p class="job-date">2020 - 2021</p>
                         <div class="job-description">
@@ -272,8 +295,8 @@
     <section class="projects" id="projects">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Featured Projects</h2>
-                <p class="section-subtitle">Some of my recent work</p>
+                <h2 class="section-title">featured projects</h2>
+                <p class="section-subtitle">{ some of my recent work }</p>
             </div>
             <div class="projects-grid">
                 <div class="project-card">
@@ -281,7 +304,7 @@
                         <div class="project-placeholder">Project 1</div>
                         <div class="project-overlay">
                             <a href="#" class="project-link">View Project</a>
-                            <a href="#" class="project-link">View Code</a>
+                            <a href="#" class="project-link">View GitHub</a>
                         </div>
                     </div>
                     <div class="project-content">
@@ -302,7 +325,7 @@
                         <div class="project-placeholder">Project 2</div>
                         <div class="project-overlay">
                             <a href="#" class="project-link">View Project</a>
-                            <a href="#" class="project-link">View Code</a>
+                            <a href="#" class="project-link">View GitHub</a>
                         </div>
                     </div>
                     <div class="project-content">
@@ -323,7 +346,70 @@
                         <div class="project-placeholder">Project 3</div>
                         <div class="project-overlay">
                             <a href="#" class="project-link">View Project</a>
-                            <a href="#" class="project-link">View Code</a>
+                            <a href="#" class="project-link">View GitHub</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Project Name</h3>
+                        <p class="project-description">
+                            A brief description of your project and the technologies used to build it.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML/CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">API</span>
+                        </div>
+                    </div>
+                </div>
+
+                                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-placeholder">Project 4</div>
+                        <div class="project-overlay">
+                            <a href="#" class="project-link">View Project</a>
+                            <a href="#" class="project-link">View GitHub</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Project Name</h3>
+                        <p class="project-description">
+                            A brief description of your project and the technologies used to build it.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML/CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">API</span>
+                        </div>
+                    </div>
+                </div>
+
+                                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-placeholder">Project 5</div>
+                        <div class="project-overlay">
+                            <a href="#" class="project-link">View Project</a>
+                            <a href="#" class="project-link">View GitHub</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Project Name</h3>
+                        <p class="project-description">
+                            A brief description of your project and the technologies used to build it.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML/CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">API</span>
+                        </div>
+                    </div>
+                </div>
+
+                                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-placeholder">Project 6</div>
+                        <div class="project-overlay">
+                            <a href="#" class="project-link">View Project</a>
+                            <a href="#" class="project-link">View GitHub</a>
                         </div>
                     </div>
                     <div class="project-content">
@@ -350,6 +436,109 @@
     </footer>
 
     <!-- Scripts -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        // Load the visualization API and the geochart package
+        google.charts.load('current', {
+            'packages': ['geochart']
+        });
+        
+        // Set a callback to run when API is loaded
+        google.charts.setOnLoadCallback(drawRegionsMap);
+
+        let chart;
+        let data;
+        let options;
+
+        function drawRegionsMap() {
+            // Data: country code + visited flag
+            data = google.visualization.arrayToDataTable([
+                ['Country', 'Visited'],
+                ['AG', 1],    // Antigua and Barbuda
+                ['AU', 1],    // Australia
+                ['BE', 1],    // Belgium
+                ['CA', 1],    // Canada
+                ['CH', 1],    // Switzerland
+                ['CN', 1],    // China
+                ['CZ', 1],    // Czech Republic
+                ['DE', 1],    // Germany
+                ['DO', 1],    // Dominican Republic
+                ['ES', 1],    // Spain
+                ['FR', 1],    // France
+                ['GB', 1],    // United Kingdom
+                ['GI', 1],    // Gibraltar
+                ['GR', 1],    // Greece
+                ['HR', 1],    // Croatia
+                ['IE', 1],    // Ireland
+                ['IT', 1],    // Italy
+                ['LU', 1],    // Luxembourg
+                ['MA', 1],    // Morocco
+                ['MC', 1],    // Monaco
+                ['MX', 1],    // Mexico
+                ['NL', 1],    // Netherlands
+                ['PL', 1],    // Poland
+                ['PR', 1],    // Puerto Rico
+                ['PT', 1],    // Portugal
+                ['SA', 1],    // Saudi Arabia
+                ['TW', 1],    // Taiwan
+                ['VA', 1],    // Vatican City
+                ['US', 1],    // United States
+                // Add more countries as needed with ISO-3166 two-letter codes
+            ]);
+
+            // Get dynamic height based on viewport
+            const mapHeight = getMapHeight();
+
+            // Configure colors to match your theme
+            options = {
+                colorAxis: {
+                    colors: ['#e2e8f0', '#3b82f6']  // unvisited → visited
+                },
+                backgroundColor: 'transparent',
+                datalessRegionColor: '#f1f5f9',
+                defaultColor: '#f1f5f9',
+                tooltip: {
+                    textStyle: {
+                        color: '#1f2937',
+                        fontSize: 13
+                    }
+                },
+                legend: 'none',
+                width: '100%',
+                height: mapHeight
+            };
+
+            // Create and render the map
+            chart = new google.visualization.GeoChart(document.getElementById('map_div'));
+            chart.draw(data, options);
+        }
+
+        function getMapHeight() {
+            const width = window.innerWidth;
+            if (width >= 1200) return 400;
+            if (width >= 992) return 300;
+            if (width >= 768) return 250;
+            if (width >= 600) return 220;
+            if (width >= 480) return 200;
+            if (width >= 400) return 180;
+            return 180;
+        }
+
+        function resizeMap() {
+            if (chart && data && options) {
+                const newHeight = getMapHeight();
+                options.height = newHeight;
+                chart.draw(data, options);
+            }
+        }
+
+        // Add resize listener to redraw map on window resize
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(resizeMap, 250);
+        });
+    </script>
     <script src="js/main.js"></script>
 </body>
 </html>

@@ -187,7 +187,7 @@ function initCounterAnimations() {
 }
 
 function animateCounter(element) {
-    const target = parseInt(element.getAttribute('data-count'));
+    const target = parseInt(element.getAttribute('data-target') || element.getAttribute('data-count'));
     const duration = 2000; // 2 seconds
     const increment = target / (duration / 16); // 60 FPS
     let current = 0;
