@@ -51,4 +51,4 @@ Visit the live site at: `https://boernerc20.github.io`
 
 ---
 
-Built with ❤️ using vanilla HTML, CSS, and JavaScript
+Built using vanilla HTML, CSS, and JavaScript
