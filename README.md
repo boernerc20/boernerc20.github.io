@@ -47,7 +47,7 @@ A clean, modern portfolio website showcasing my work as a computer engineer spec
 
 ## � Live Demo
 
-Visit the live site at: `https://boernerc20.github.io`
+Visit the live site at: `http://boernerc20.me`
 
 ---
 
