@@ -47,8 +47,13 @@ A clean, modern portfolio website showcasing my work as a computer engineer spec
 
 ## � Live Demo
 
-Visit the live site at: `https://boernerc20.github.io`
+Visit the live site at: `https://boernerc20.me`
 
 ---
 
 Built using vanilla HTML, CSS, and JavaScript
+Inspired by these sites:
+- `https://v4.brittanychiang.com/`
+- `https://saahild.com/`
+- `https://matthiaskretschmann.com/`
+- `https://ellishw.tech/`
