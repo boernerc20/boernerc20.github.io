@@ -1630,6 +1630,66 @@ section {
     will-change: transform;
 }
 
+/* 3D Model Viewer Styles */
+.project-3d .project-image {
+    height: 300px;
+}
+
+.project-3d-container {
+    position: relative;
+    background: var(--bg-secondary);
+}
+
+model-viewer {
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    --poster-color: transparent;
+}
+
+model-viewer .progress-bar {
+    display: block;
+    width: 33%;
+    height: 10%;
+    max-height: 2%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    border-radius: 25px;
+    box-shadow: 0px 3px 10px 3px rgba(0, 0, 0, 0.5), 0px 0px 5px 1px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+model-viewer .progress-bar.hide {
+    visibility: hidden;
+}
+
+model-viewer .update-bar {
+    background-color: var(--primary-color);
+    width: 0%;
+    height: 100%;
+    border-radius: 25px;
+    float: left;
+    transition: width 0.3s;
+}
+
+/* Dark mode adjustments for model viewer */
+[data-theme="dark"] model-viewer {
+    --poster-color: transparent;
+}
+
+/* Mobile optimizations for 3D models */
+@media (max-width: 768px) {
+    .project-3d .project-image {
+        height: 250px;
+    }
+    
+    model-viewer {
+        /* Reduce quality on mobile for better performance */
+        --poster-color: var(--bg-secondary);
+    }
+}
+
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
     *,
@@ -1639,5 +1699,10 @@ section {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
+    }
+    
+    model-viewer {
+        /* Disable auto-rotate for users who prefer reduced motion */
+        --poster-color: var(--bg-secondary);
     }
 }
