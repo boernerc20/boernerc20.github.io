@@ -1,0 +1,209 @@
+# Chris Boerner Portfolio Website - Project Context
+
+## Project Overview
+
+This is a personal portfolio website for Chris Boerner, a computer engineer specializing in embedded systems, digital design, and electronics. The site is hosted on GitHub Pages with a custom domain (boernerc20.me).
+
+**Live Site**: https://boernerc20.me
+**Repository**: git@github.com:boernerc20/boernerc20.github.io.git
+**Branch**: main
+**Deployment**: Automatic via GitHub Pages (no build process)
+
+## Technology Stack
+
+- **Pure Static Site**: No frameworks, no build tools, no package.json
+- **HTML5**: Semantic markup with accessibility features (aria labels)
+- **CSS3**: Vanilla CSS with Custom Properties for theming (1,742 lines)
+- **JavaScript**: ES6+ vanilla JavaScript, no libraries (849 lines)
+- **External Services**:
+  - Google Fonts (Inter, JetBrains Mono)
+  - Google Charts API (for travel map visualization)
+  - Google Model Viewer (for 3D PCB rendering)
+- **Hosting**: GitHub Pages with CNAME configuration
+
+## Directory Structure
+
+```
+boernerc20.github.io/
+├── index.html          # Main entry point (28.5 KB) - All sections in one file
+├── css/
+│   └── style.css       # Complete styling system (34 KB, 1,742 lines)
+├── js/
+│   └── main.js         # Core interactivity (29 KB, 849 lines)
+├── imgs/               # Project showcase images (6.5 MB total)
+│   ├── ecodistrict-mockup.png
+│   ├── masters-project.png
+│   ├── senior-design.png
+│   ├── pcb-learning.png
+│   ├── linux-dotfiles.png
+│   └── minecraft-jukebox.jpg
+├── favicon.png         # 3.3 KB
+├── favicon.svg         # 558 B
+├── headshot.jpg        # 65 KB profile image
+├── resume.pdf          # 72 KB downloadable resume
+├── esp_clone.glb       # 6.7 MB 3D model for testing
+├── CNAME               # Custom domain configuration
+└── README.md           # Project documentation
+```
+
+## Key Sections in index.html
+
+1. **Navigation Bar**: Theme toggle, smooth scroll links
+2. **Hero Section**: Introduction with animated background shapes, social links
+3. **About Section**: Personal description, headshot, Google Charts travel map
+4. **Experience Section**: Tabbed interface showing work history (Virginia Tech, Grenoble, Deloitte, SSRG)
+5. **Projects Grid**: 6 featured projects with images, descriptions, and GitHub links
+6. **3D Model Viewer**: Google Model Viewer for PCB showcase
+7. **Footer**: Contact information and copyright
+
+## JavaScript Features (js/main.js)
+
+- Theme toggle (light/dark mode with localStorage persistence)
+- Navigation with mobile hamburger menu
+- Scroll animations and parallax effects
+- Dynamic age counter (calculates from birthdate)
+- Experience tab switching interface
+- Counter animations for statistics
+- Smooth scroll behavior
+- Dynamic shape animations in hero section
+- Contact form handling (Gmail integration)
+
+## CSS Features (css/style.css)
+
+- CSS Custom Properties for theming (--primary, --background, --text, etc.)
+- Dark mode support with system preference detection
+- Flexbox and Grid layouts for responsiveness
+- Smooth transitions and animations
+- Mobile-first responsive design
+- Shadow and spacing systems
+- Hardware-accelerated animations
+
+## Deployment Workflow
+
+**Current Setup**:
+- Push to `main` branch triggers automatic deployment via GitHub Pages
+- No CI/CD pipeline or GitHub Actions configured
+- Files are served directly as static assets
+- CNAME file ensures custom domain routing
+
+**Making Changes**:
+1. Edit HTML, CSS, or JavaScript files directly
+2. Test locally by opening index.html in browser
+3. Commit changes: `git add . && git commit -m "description"`
+4. Push to GitHub: `git push origin main`
+5. Changes appear live within 1-2 minutes
+
+## Common Tasks
+
+### Adding a New Project
+1. Add project image to `imgs/` directory
+2. Edit `index.html` - find the projects section
+3. Add new project card with image, title, description, technologies, and GitHub link
+4. Commit and push changes
+
+### Updating Resume
+1. Replace `resume.pdf` file
+2. Optionally update `resume_text.txt` for text version
+3. Commit and push
+
+### Changing Colors/Theme
+1. Edit CSS Custom Properties in `css/style.css`
+2. Look for `:root` and `[data-theme="dark"]` sections
+3. Modify color values (hex codes)
+
+### Adding New Experience
+1. Edit `index.html` - find the experience section
+2. Add new tab button and corresponding content panel
+3. Update `js/main.js` if needed for tab functionality
+
+## Git Best Practices for This Project
+
+- Keep commits atomic and descriptive
+- Test locally before pushing (open index.html in browser)
+- Optimize images before adding to `imgs/` directory
+- Avoid committing large binary files
+- Keep main branch deployable at all times
+- Use conventional commit messages:
+  - `feat: add new project showcase`
+  - `fix: correct favicon path`
+  - `style: update color scheme`
+  - `content: update resume and experience`
+
+## Performance Considerations
+
+- **No Build Step**: Changes are immediately visible, no compilation
+- **Minimal Dependencies**: Only Google CDN services
+- **Image Optimization**: Compress images before adding to imgs/
+- **Browser Caching**: Leverage CNAME and GitHub Pages caching
+- **Lighthouse Scores**: Target 90+ across all metrics
+
+## Domain Configuration
+
+- Custom domain: `boernerc20.me`
+- DNS managed externally (points to GitHub Pages)
+- CNAME file in repository root maintains domain mapping
+- HTTPS enforced automatically by GitHub Pages
+
+## Future Enhancement Ideas
+
+- Add blog section with markdown posts
+- Implement project filtering by technology
+- Add animations on scroll (AOS library)
+- Create contact form with backend (FormSpree, Netlify Forms)
+- Add analytics (privacy-focused like Plausible)
+- Implement proper travel map with visited locations
+- Add testimonials section
+- Create case studies for major projects
+
+## Code Style Guidelines
+
+**HTML**:
+- Use semantic elements (`<header>`, `<section>`, `<article>`)
+- Include aria labels for accessibility
+- Keep consistent indentation (2 spaces)
+
+**CSS**:
+- Use CSS Custom Properties for theming
+- Follow BEM naming convention for classes
+- Mobile-first media queries
+- Group related styles together
+
+**JavaScript**:
+- Use ES6+ features (const/let, arrow functions, template literals)
+- Comment complex logic
+- Keep functions small and focused
+- Use meaningful variable names
+
+## Troubleshooting
+
+**Changes not appearing on live site**:
+- Wait 1-2 minutes after pushing
+- Clear browser cache (Ctrl+Shift+R)
+- Check GitHub Pages settings in repository
+
+**Theme toggle not working**:
+- Check localStorage in browser console
+- Verify data-theme attribute on <html> element
+- Check js/main.js for theme toggle logic
+
+**Images not loading**:
+- Verify file paths are correct (case-sensitive on Linux/GitHub)
+- Check image file sizes (optimize if >500KB)
+- Ensure images are committed to repository
+
+## External Resources
+
+**Inspiration Sites** (referenced in README):
+- https://v4.brittanychiang.com/
+- https://saahild.com/
+- https://matthiaskretschmann.com/
+- https://ellishw.tech/
+
+**Documentation**:
+- Google Model Viewer: https://modelviewer.dev/
+- Google Charts: https://developers.google.com/chart
+- GitHub Pages: https://pages.github.com/
+
+---
+
+**Note**: This is a lightweight, performance-focused portfolio. Avoid introducing heavy frameworks or complex build processes unless absolutely necessary. The simplicity is a feature, not a limitation.

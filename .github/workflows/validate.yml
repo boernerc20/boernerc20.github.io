@@ -1,0 +1,31 @@
+name: Validate Website
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Validate HTML
+      uses: Cyb3r-Jak3/html5validator-action@v7.2.0
+      with:
+        root: .
+
+    - name: Check file sizes
+      run: |
+        echo "Checking for large files..."
+        find imgs/ -type f -size +1M -exec ls -lh {} \; | awk '{print $9 ": " $5}'
+
+    - name: Summary
+      run: |
+        echo "✅ HTML validation passed"
+        echo "✅ File size check completed"
+        echo "🚀 Ready for deployment to GitHub Pages"
