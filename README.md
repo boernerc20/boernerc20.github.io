@@ -2,7 +2,7 @@
 
 A clean, modern portfolio website showcasing my work as a computer engineer specializing in embedded systems, digital design, and electronics.
 
-## 🚀 Features
+## Features
 
 - **Responsive Design**: Works seamlessly on desktop and mobile
 - **Dark/Light Theme**: Toggle between themes with smooth transitions
@@ -11,7 +11,7 @@ A clean, modern portfolio website showcasing my work as a computer engineer spec
 - **Travel Map Placeholder**: Ready for future travel visualization feature
 - **Optimized Performance**: Fast loading with vanilla HTML, CSS, and JavaScript
 
-## 📁 Structure
+## Structure
 
 ```
 ├── index.html          # Main page with all sections
@@ -21,7 +21,7 @@ A clean, modern portfolio website showcasing my work as a computer engineer spec
 └── resume.pdf          # Downloadable resume
 ```
 
-## 🎯 Sections
+## Sections
 
 - **Hero**: Introduction with dynamic age counter and social links
 - **About**: Personal description with circular headshot and travel map placeholder  
@@ -29,7 +29,7 @@ A clean, modern portfolio website showcasing my work as a computer engineer spec
 - **Projects**: Portfolio showcase with placeholder project cards
 - **Footer**: Copyright and contact information
 
-## 🚀 Quick Start
+## Quick Start
 
 1. Clone the repository
 2. Update personal information in `index.html`
@@ -37,7 +37,7 @@ A clean, modern portfolio website showcasing my work as a computer engineer spec
 4. Add your `resume.pdf`
 5. Deploy to GitHub Pages or your preferred hosting
 
-## 🛠️ Customization
+## Customization
 
 - **Personal Info**: Update name, description, and social links in the hero section
 - **Work Experience**: Modify the experience tabs with your professional history
@@ -45,7 +45,7 @@ A clean, modern portfolio website showcasing my work as a computer engineer spec
 - **Colors**: Customize the color scheme using CSS custom properties in `style.css`
 - **Travel Map**: The placeholder is ready for future implementation
 
-## � Live Demo
+## Live Demo
 
 Visit the live site at: `https://boernerc20.me`
 
