@@ -25,7 +25,7 @@ jobs:
     - name: Download latest resume from LaTeX-Resume repo
       run: |
         echo "Fetching latest resume..."
-        curl -L -o resume.pdf "https://github.com/boernerc20/LaTeX-Resume/raw/main/Boerner_Christopher_Resume.pdf"
+        curl -L -o resume.pdf "https://github.com/boernerc20/LaTeX-Resume/raw/main/Christopher_Boerner_Resume.pdf"
 
         echo "Resume downloaded successfully"
         ls -lh resume.pdf
