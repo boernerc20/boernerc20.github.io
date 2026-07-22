@@ -1,0 +1,363 @@
+---
+// The signature: an oscilloscope showing the console this site boots on.
+// The waveform is genuinely UART-encoded from STREAM — start bit (0),
+// 8 data bits LSB-first, stop bit (1) — so the trace really is these bytes.
+const BOOT = [
+  'BOOT boernerc20.me',
+  'INIT design system',
+  'MOUNT /about',
+  'LOAD /experience',
+  'LOAD /projects',
+  'LINK /beyond',
+  'SYS READY',
+];
+const STREAM = BOOT.join('\r\n');
+
+const BIT = 12;   // user units per bit
+const HIGH = 100; // logic 1
+const LOW = 200;  // logic 0
+
+const bits: number[] = [];
+for (const ch of STREAM) {
+  const code = ch.charCodeAt(0);
+  bits.push(0);                                            // start bit
+  for (let i = 0; i < 8; i++) bits.push((code >> i) & 1);   // LSB first
+  bits.push(1);                                            // stop bit
+}
+
+const lvl = (b: number) => (b ? HIGH : LOW);
+let d = `M 0 ${lvl(bits[0])}`;
+let x = 0;
+for (let i = 0; i < bits.length; i++) {
+  const y = lvl(bits[i]);
+  if (i > 0) d += ` L ${x} ${y}`; // vertical edge at the bit boundary
+  x += BIT;
+  d += ` L ${x} ${y}`;            // hold across the bit
+}
+const shift = 600 - x;
+
+// per-line hex preview, so the console and the bytes agree
+const toHex = (s: string) =>
+  [...s].map((c) => c.charCodeAt(0).toString(16).toUpperCase().padStart(2, '0'));
+const consoleData = BOOT.map((t) => ({
+  t,
+  h: toHex(t).slice(0, 6).join(' ') + ' …',
+}));
+---
+<section class="hero" id="top">
+  <div class="container hero-grid">
+    <div class="hero-id reveal">
+      <p class="silk hero-eyebrow"><span class="slash">//</span> electrical engineer</p>
+      <h1 class="hero-name">Christopher<br />Boerner</h1>
+      <p class="hero-sub mono">
+        Space&nbsp;Systems · <span class="hl">Avionics</span> · Northrop&nbsp;Grumman
+      </p>
+      <p class="hero-desc">
+        I work on avionics for spacecraft — the boxes, the boards inside them, and the
+        wiring that ties them together — taking flight hardware from schematic to verified
+        on the bench.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn--primary" href="#projects">view work →</a>
+        <a class="btn" href="/resume.pdf" download="Chris_Boerner_Resume.pdf">résumé ↓</a>
+      </div>
+    </div>
+
+    <figure class="scope reveal">
+      <div class="scope-bezel">
+        <div class="scope-topbar">
+          <span class="silk plate">Oscilloscope</span>
+          <span class="led" aria-hidden="true"></span>
+          <span class="silk plate-model">100 MHz · 2CH</span>
+          <span class="scope-badge silk silk--accent">TS</span>
+        </div>
+
+        <div class="scope-screen">
+          <svg viewBox="0 0 600 300" preserveAspectRatio="none" role="img"
+               aria-label="Oscilloscope displaying a serial data stream being decoded">
+            <defs>
+              <filter id="glow" x="-20%" y="-40%" width="140%" height="180%">
+                <feGaussianBlur stdDeviation="2.4" result="b" />
+                <feMerge>
+                  <feMergeNode in="b" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            <g class="grat">
+              <path d="M0 60H600M0 120H600M0 180H600M0 240H600" />
+              <path d="M60 0V300M120 0V300M180 0V300M240 0V300M300 0V300M360 0V300M420 0V300M480 0V300M540 0V300" />
+              <path class="grat-axis" d="M0 150H600" />
+            </g>
+
+            <g class="stream" style={`--shift:${shift}px`}>
+              <path class="wave" d={d} />
+            </g>
+          </svg>
+        </div>
+
+        <div class="scope-readout mono">
+          <span>UART <b>9600</b> 8N1</span>
+          <span>CH1 <b>3.3</b>V</span>
+          <span>MET <b id="met">T+ ········</b></span>
+        </div>
+
+        <div class="decode mono" data-lines={JSON.stringify(consoleData)}>
+          <span class="silk d-label">RX</span>
+          <span class="d-hex" id="decode-hex"></span>
+          <span class="d-arrow" aria-hidden="true">▸</span>
+          <span class="d-txt" id="decode-txt"></span>
+        </div>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // MET clock
+    var el = document.getElementById('met');
+    if (el) {
+      var birth = new Date(2002, 0, 9, 7, 0, 0).getTime();
+      var two = function (n) { return (n < 10 ? '0' : '') + n; };
+      var tick = function () {
+        var s = Math.floor((Date.now() - birth) / 1000);
+        var days = Math.floor(s / 86400);
+        var years = Math.floor(days / 365.25);
+        var rem = days - Math.floor(years * 365.25);
+        el.textContent = 'T+ ' + years + 'Y ' + rem + 'D ' +
+          two(Math.floor((s % 86400) / 3600)) + ':' +
+          two(Math.floor((s % 3600) / 60)) + ':' + two(s % 60);
+      };
+      tick();
+      setInterval(tick, 1000);
+    }
+
+    // Boot console: type each line, resolve its status, then continue
+    var box = document.querySelector('.decode');
+    var txt = document.getElementById('decode-txt');
+    var hex = document.getElementById('decode-hex');
+    if (!box || !txt || !hex) return;
+
+    var data;
+    try { data = JSON.parse(box.getAttribute('data-lines') || '[]'); } catch (e) { return; }
+    if (!data.length) return;
+
+    if (reduce) {
+      var last = data[data.length - 1];
+      hex.textContent = last.h;
+      txt.textContent = last.t;
+      return;
+    }
+
+    var idx = 0;
+    function step() {
+      var item = data[idx];
+      hex.textContent = item.h;
+      txt.classList.add('typing');
+      var i = 0;
+      (function type() {
+        txt.textContent = item.t.slice(0, i);
+        if (i++ <= item.t.length) {
+          setTimeout(type, 45);
+        } else {
+          setTimeout(function () {
+            txt.classList.remove('typing');
+            idx = (idx + 1) % data.length;
+            step();
+          }, 1600);
+        }
+      })();
+    }
+    step();
+  })();
+</script>
+
+<style>
+  .hero {
+    min-height: min(92vh, 900px);
+    display: flex;
+    align-items: center;
+    padding-block: clamp(6rem, 14vh, 9rem) clamp(3rem, 8vh, 5rem);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 4.5rem);
+  }
+
+  .hero-eyebrow { margin-bottom: 1.25rem; }
+  .hero-eyebrow .slash { color: var(--signal); }
+  .hero-name {
+    font-size: var(--fs-hero);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    margin-bottom: 1.1rem;
+  }
+  .hero-sub {
+    font-size: var(--fs-sm);
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+  }
+  .hero-sub .hl { color: var(--signal); }
+  .hero-desc {
+    max-width: 44ch;
+    color: var(--text-dim);
+    font-size: var(--fs-md);
+    margin-bottom: 2rem;
+  }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+  /* ── Oscilloscope ── */
+  .scope { margin: 0; }
+  .scope-bezel {
+    position: relative;
+    background: linear-gradient(180deg, var(--panel-2), var(--panel));
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 0.85rem;
+    box-shadow: var(--shadow);
+  }
+  .scope-bezel::before,
+  .scope-bezel::after {
+    content: '';
+    position: absolute;
+    width: 12px; height: 12px;
+    border: 1px solid var(--neon);
+    opacity: 0.5;
+  }
+  .scope-bezel::before { top: 6px; left: 6px; border-right: 0; border-bottom: 0; }
+  .scope-bezel::after  { bottom: 6px; right: 6px; border-left: 0; border-top: 0; }
+
+  .scope-topbar {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.15rem 0.35rem 0.7rem;
+  }
+  .plate { color: var(--text); letter-spacing: 0.14em; font-weight: 500; }
+  .plate-model { color: var(--text-mut); letter-spacing: 0.16em; }
+  .scope-badge { margin-left: auto; }
+  .led {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--neon);
+    box-shadow: 0 0 10px 1px var(--glow-neon);
+    animation: led-pulse 2.4s var(--ease) infinite;
+    flex: none;
+  }
+
+  .scope-screen {
+    position: relative;
+    aspect-ratio: 2 / 1;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: radial-gradient(120% 100% at 50% 0%, #0b1424 0%, #060a14 70%, #05080f 100%);
+    border: 1px solid var(--line);
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(0,0,0,0.4);
+  }
+  .scope-screen svg { width: 100%; height: 100%; position: relative; z-index: 1; }
+  .scope-screen::before {
+    content: '';
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(80% 60% at 82% 108%, var(--glow-neon), transparent 60%),
+      radial-gradient(70% 60% at 12% -8%, var(--glow-soft), transparent 60%);
+  }
+
+  .grat path { stroke: color-mix(in srgb, var(--signal) 12%, transparent); stroke-width: 1; fill: none; }
+  .grat .grat-axis { stroke: color-mix(in srgb, var(--signal) 20%, transparent); stroke-width: 1; }
+
+  .stream { animation: stream 90s linear infinite; }
+  .wave {
+    fill: none;
+    stroke: var(--signal);
+    stroke-width: 2.4;
+    stroke-linejoin: round;
+    filter: url(#glow);
+  }
+
+  .scope-screen::after {
+    content: '';
+    position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    background:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.16) 0 1px, transparent 1px 3px),
+      radial-gradient(120% 120% at 50% 50%, transparent 55%, rgba(0,0,0,0.5) 100%);
+    mix-blend-mode: multiply;
+    opacity: 0.5;
+  }
+
+  .scope-readout {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.7rem 0.35rem 0.55rem;
+    font-size: var(--fs-xs);
+    letter-spacing: 0.06em;
+    color: var(--text-mut);
+    flex-wrap: wrap;
+  }
+  .scope-readout b { color: var(--signal); font-weight: 500; }
+
+  /* ── Decode row ── */
+  .decode {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-wrap: nowrap;
+    padding: 0.6rem 0.35rem 0.15rem;
+    border-top: 1px solid var(--line);
+    font-size: var(--fs-xs);
+    overflow: hidden;
+  }
+  .d-label { color: var(--text-mut); flex: none; }
+  .d-hex { color: var(--text-mut); letter-spacing: 0.08em; flex: none; }
+  .d-arrow { color: var(--neon); flex: none; }
+  .d-txt {
+    color: var(--signal);
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 12px var(--glow);
+    min-height: 1em;
+    white-space: nowrap;
+  }
+  .d-txt.typing::after {
+    content: '';
+    display: inline-block;
+    width: 7px; height: 1em;
+    margin-left: 3px;
+    background: var(--signal);
+    vertical-align: -2px;
+    animation: caret 1s steps(1) infinite;
+  }
+
+  @keyframes stream { to { transform: translateX(var(--shift)); } }
+  @keyframes caret { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+  @keyframes led-pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 10px 1px var(--glow-neon); }
+    50%      { opacity: 0.4; box-shadow: 0 0 4px 0 var(--glow-neon); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stream { animation: none; }
+    .led { animation: none; }
+    .d-txt::after { animation: none; opacity: 0; }
+  }
+
+  @media (max-width: 800px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .scope { order: -1; }
+    .hero-desc { max-width: none; }
+  }
+  @media (max-width: 560px) {
+    .d-hex { display: none; }
+  }
+  @media (max-width: 430px) {
+    /* keep the front panel on a single line */
+    .plate-model { display: none; }
+  }
+</style>

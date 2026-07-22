@@ -1,0 +1,74 @@
+[
+  {
+    "designator": "EXP-01",
+    "role": "Electrical Engineer",
+    "org": "Northrop Grumman",
+    "note": "ESPAStar · ESPASat-L",
+    "start": "Nov 2025",
+    "end": "Present",
+    "location": "Dulles, VA",
+    "bullets": [
+      "Work on avionics for ESPASat-L space vehicles that dispense from the ESPAStar satellite bus, each carrying a unique mission payload.",
+      "Previously a Systems Engineer on the NASA Gateway program — analyzed the Electrical Power System (schematics, pinouts, block diagrams) and wrote/ran hardware verification test scripts (Python, NASA STOL) against flight computers and flatsat hardware."
+    ],
+    "tags": ["Avionics", "Space Systems", "ESPAStar", "Electrical Integration", "Python", "Flight Hardware"]
+  },
+  {
+    "designator": "EXP-02",
+    "role": "Grader — ECE 2564 Embedded Systems",
+    "org": "Virginia Tech",
+    "note": null,
+    "start": "Sep 2024",
+    "end": "Dec 2024",
+    "location": "Blacksburg, VA",
+    "bullets": [
+      "Graded homework and coding projects for the embedded systems course.",
+      "Worked in C on TI MSP432 microcontroller-based systems.",
+      "Collaborated with TAs and the professor to keep the course running smoothly."
+    ],
+    "tags": ["C", "MSP432", "Embedded Systems", "Git"]
+  },
+  {
+    "designator": "EXP-03",
+    "role": "Research Intern",
+    "org": "G2Elab",
+    "note": "Grenoble EE Laboratory",
+    "start": "Jun 2024",
+    "end": "Jul 2024",
+    "location": "Grenoble, FR",
+    "bullets": [
+      "Designed photovoltaic-powered smart-home mockups with load management and real-time power monitoring.",
+      "Programmed Arduino and ESP8266 microcontrollers for appliance control and MQTT telemetry to a centralized Raspberry Pi energy manager."
+    ],
+    "tags": ["Arduino", "ESP8266", "MQTT", "Raspberry Pi", "Power Systems"]
+  },
+  {
+    "designator": "EXP-04",
+    "role": "GPS Advisory Cyber Intern",
+    "org": "Deloitte",
+    "note": null,
+    "start": "Jun 2023",
+    "end": "Aug 2023",
+    "location": "Washington, DC",
+    "bullets": [
+      "Improved a government client's cybersecurity framework using an identity governance & administration solution, focused on Identity, Credential, and Access Management (ICAM).",
+      "Developed visuals and process cycles for a business requirements document.",
+      "Built soft skills through conferences and leading presentations."
+    ],
+    "tags": ["Cybersecurity", "ICAM", "Presenting", "Business"]
+  },
+  {
+    "designator": "EXP-05",
+    "role": "Student Researcher",
+    "org": "Virginia Tech",
+    "note": "Computer Architecture",
+    "start": "Sep 2022",
+    "end": "May 2023",
+    "location": "Blacksburg, VA",
+    "bullets": [
+      "Built a script to automatically run complex benchmarks on an FPGA-based heterogeneous computer system and collect data.",
+      "Implemented RISC-V 64-bit architectures on an FPGA and modified the processor's instruction execution phase to prevent attackers from extracting information about a cryptographic application."
+    ],
+    "tags": ["Verilog", "RISC-V", "FPGA", "Xilinx Vivado", "Unix"]
+  }
+]

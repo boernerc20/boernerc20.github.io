@@ -19,10 +19,11 @@ desktop.ini
 *.log
 *.bak
 
-# Build artifacts (if you add build tools later)
+# Build artifacts
 dist/
 build/
 node_modules/
+.astro/
 
 # Environment files
 .env

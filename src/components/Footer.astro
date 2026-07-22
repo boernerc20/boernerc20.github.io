@@ -1,0 +1,72 @@
+---
+const social = [
+  { label: 'email', href: 'mailto:boernerc20@gmail.com' },
+  { label: 'github', href: 'https://github.com/boernerc20' },
+  { label: 'linkedin', href: 'https://linkedin.com/in/boernerc20/' },
+  { label: 'youtube', href: 'https://www.youtube.com/@krizzfpv' },
+];
+---
+<footer class="footer">
+  <div class="container footer-in">
+    <div class="foot-brand">
+      <a class="foot-logo mono" href="#top">cb<span>//</span></a>
+      <p class="dim mono foot-meta">
+        Built with Astro · &copy; <span id="foot-year">2026</span> Christopher Boerner
+      </p>
+    </div>
+
+    <nav class="foot-social mono" aria-label="Social">
+      {social.map((s) => (
+        <a href={s.href} target={s.href.startsWith('http') ? '_blank' : undefined} rel="noopener">{s.label} ↗</a>
+      ))}
+    </nav>
+
+    <p class="foot-status mono">
+      <span class="pip" aria-hidden="true"></span> all systems nominal
+    </p>
+  </div>
+</footer>
+
+<script is:inline>
+  var y = document.getElementById('foot-year');
+  if (y) y.textContent = new Date().getFullYear();
+</script>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--line);
+    padding-block: clamp(2rem, 4vw, 3rem);
+    margin-top: clamp(2rem, 5vw, 4rem);
+  }
+  .footer-in {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+  .foot-logo { font-size: var(--fs-md); color: var(--text); }
+  .foot-logo span { color: var(--signal); }
+  .foot-meta { font-size: var(--fs-xs); letter-spacing: 0.04em; margin-top: 0.4rem; }
+
+  .foot-social { display: flex; flex-wrap: wrap; gap: 1.25rem; font-size: var(--fs-sm); }
+  .foot-social a { color: var(--text-dim); letter-spacing: 0.03em; }
+  .foot-social a:hover { color: var(--signal); }
+
+  .foot-status {
+    font-size: var(--fs-xs);
+    letter-spacing: 0.1em;
+    color: var(--text-mut);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .pip {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--signal);
+    box-shadow: 0 0 10px 1px var(--glow);
+  }
+  @media (max-width: 560px) {
+    .footer-in { flex-direction: column; align-items: flex-start; }
+  }
+</style>

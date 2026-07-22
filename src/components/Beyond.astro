@@ -1,0 +1,89 @@
+---
+import countries from '../data/countries.json';
+---
+<section class="section" id="beyond">
+  <div class="container">
+    <div class="sec-head">
+      <span class="silk desig">04</span>
+      <h2 class="sec-title">Beyond the bench</h2>
+    </div>
+
+    <div class="beyond-grid">
+      <div class="beyond-intro reveal">
+        <p>
+          I'm usually building or flying something — capturing cinematic
+          <strong>FPV drone</strong> footage for my YouTube channel, tuning the homelab,
+          hitting the gym, or exploring somewhere new.
+        </p>
+        <a class="btn" href="https://www.youtube.com/@krizzfpv" target="_blank" rel="noopener">
+          @krizzfpv on YouTube ↗
+        </a>
+      </div>
+
+      <div class="fieldlog reveal">
+        <div class="stats">
+          <div class="stat">
+            <span class="num mono">{countries.length}</span>
+            <span class="silk lbl">countries</span>
+          </div>
+          <div class="stat">
+            <span class="num mono">5</span>
+            <span class="silk lbl">continents</span>
+          </div>
+        </div>
+        <div class="manifest">
+          <p class="silk manifest-head"><span class="slash">//</span> visited — field log</p>
+          <ul class="tags">
+            {countries.map((c) => <li class="tag">{c}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .beyond-grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: start;
+  }
+  .beyond-intro p {
+    font-size: var(--fs-md);
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+    max-width: 44ch;
+  }
+  .beyond-intro strong { color: var(--text); font-weight: 600; }
+
+  .fieldlog {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--panel) 50%, transparent);
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+  }
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .stat { display: flex; flex-direction: column; gap: 0.25rem; }
+  .num {
+    font-size: clamp(2.25rem, 1.5rem + 3vw, 3.25rem);
+    font-weight: 500;
+    line-height: 1;
+    color: var(--signal);
+    text-shadow: 0 0 24px var(--glow);
+  }
+  .lbl { color: var(--text-mut); }
+
+  .manifest-head { color: var(--text-dim); margin-bottom: 0.9rem; }
+  .manifest-head .slash { color: var(--signal); }
+
+  @media (max-width: 760px) {
+    .beyond-grid { grid-template-columns: 1fr; }
+  }
+</style>

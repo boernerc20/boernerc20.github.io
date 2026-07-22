@@ -1,0 +1,131 @@
+---
+import experience from '../data/experience.json';
+---
+<section class="section" id="experience">
+  <div class="container">
+    <div class="sec-head">
+      <span class="silk desig">02</span>
+      <h2 class="sec-title">Experience</h2>
+    </div>
+
+    <ol class="log">
+      {experience.map((job) => (
+        <li class="log-entry reveal">
+          <div class="log-rail"><span class="node" aria-hidden="true"></span></div>
+          <div class="log-card">
+            <div class="log-top">
+              <span class="silk log-desig">{job.designator}</span>
+              <span class="silk log-date">{job.start} — {job.end}</span>
+            </div>
+            <h3 class="log-role">
+              {job.role} <span class="log-org">@ {job.org}</span>
+            </h3>
+            <p class="log-meta mono">{job.note ? job.note + ' · ' : ''}{job.location}</p>
+            <ul class="log-bullets">
+              {job.bullets.map((b) => <li>{b}</li>)}
+            </ul>
+            <ul class="tags">
+              {job.tags.map((t) => <li class="tag">{t}</li>)}
+            </ul>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .log { position: relative; list-style: none; padding: 0; margin: 0; }
+  /* the timeline rail */
+  .log::before {
+    content: '';
+    position: absolute;
+    left: 20px; top: 10px; bottom: 10px;
+    width: 1px;
+    background: linear-gradient(var(--signal-deep), var(--line) 12%, var(--line) 88%, transparent);
+    opacity: 0.6;
+  }
+
+  .log-entry {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: clamp(1rem, 2.5vw, 1.75rem);
+    padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .log-entry:last-child { padding-bottom: 0; }
+
+  .log-rail { position: relative; }
+  .node {
+    position: absolute;
+    left: 20px; top: 8px;
+    transform: translateX(-50%);
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--signal);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--signal) 10%, transparent),
+                0 0 12px -2px var(--glow);
+    transition: box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  }
+
+  .log-card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--panel) 55%, transparent);
+    padding: clamp(1.1rem, 2.5vw, 1.6rem);
+    transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease),
+                background var(--dur) var(--ease);
+  }
+  .log-entry:hover .log-card {
+    border-color: color-mix(in srgb, var(--signal) 45%, var(--line));
+    background: var(--panel);
+  }
+  .log-entry:hover .node {
+    border-color: var(--neon);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--neon) 14%, transparent),
+                0 0 14px -2px var(--glow-neon);
+  }
+
+  .log-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.7rem;
+  }
+  .log-desig { color: var(--text-mut); letter-spacing: 0.18em; }
+  .log-date { color: var(--signal); letter-spacing: 0.04em; }
+
+  .log-role {
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.3rem;
+  }
+  .log-org { color: var(--text-dim); font-weight: 500; }
+  .log-meta {
+    font-size: var(--fs-xs);
+    letter-spacing: 0.06em;
+    color: var(--text-mut);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .log-bullets { list-style: none; padding: 0; margin: 0 0 1.2rem; }
+  .log-bullets li {
+    position: relative;
+    padding-left: 1.35rem;
+    margin-bottom: 0.6rem;
+    color: var(--text-dim);
+    font-size: var(--fs-base);
+  }
+  .log-bullets li::before {
+    content: '▹';
+    position: absolute;
+    left: 0;
+    color: var(--signal);
+  }
+
+  @media (max-width: 560px) {
+    .log-top { flex-direction: column; gap: 0.2rem; }
+  }
+</style>

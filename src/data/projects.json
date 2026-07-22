@@ -1,0 +1,77 @@
+[
+  {
+    "featured": true,
+    "title": "Distributed Homelab Infrastructure",
+    "status": "Self-hosted · 2026 – present",
+    "blurb": "A from-scratch home datacenter — network, storage, and a fully local AI stack, no cloud.",
+    "detail": "PoE-powered Raspberry Pi nodes handle DNS filtering and Home Assistant automation; a ZFS mirrored NAS backs file storage and a media server; a local AI voice assistant runs Whisper speech-to-text with Ollama LLM inference; and custom ESP32 mic/speaker nodes tie the whole thing together.",
+    "specs": [
+      { "k": "NODES", "v": "PoE Raspberry Pi" },
+      { "k": "STORAGE", "v": "ZFS mirror + media" },
+      { "k": "AI", "v": "Whisper · Ollama" },
+      { "k": "VOICE", "v": "ESP32 · Home Assistant" }
+    ],
+    "tags": ["Raspberry Pi", "ZFS", "Home Assistant", "Ollama", "ESP32"],
+    "image": "/imgs/homelab.jpg",
+    "links": []
+  },
+  {
+    "featured": true,
+    "title": "Custom PCB Design",
+    "status": "Personal · KiCad",
+    "blurb": "Three boards taken from schematic to fabrication-ready Gerbers — including the from-scratch ESP32 dev board rendered here.",
+    "detail": "A hands-on run through the full KiCad workflow: schematic capture, layout, design-rule checks, footprint assignment, and Gerber export for fabrication. The set included a breadboard power supply, a solar power regulator, and an ESP32 development board built from scratch — drag the model to inspect the board.",
+    "specs": [
+      { "k": "TOOL", "v": "KiCad" },
+      { "k": "BOARDS", "v": "supply · solar reg · ESP32" },
+      { "k": "OUTPUT", "v": "schematic → Gerber" },
+      { "k": "CHECKS", "v": "DRC · footprint · DFM" }
+    ],
+    "tags": ["KiCad", "Schematic Capture", "Power Electronics", "ESP32"],
+    "model": "/esp_clone.glb",
+    "links": []
+  },
+  {
+    "featured": true,
+    "title": "Aircraft Data Acquisition System",
+    "status": "Senior Design · Virginia Tech / NAVAIR",
+    "blurb": "A battery-powered DAQ prototype for capturing flight sensor data and streaming it live over RF.",
+    "detail": "Designed custom PCBs with regulated power supplies, Wheatstone-bridge signal conditioning, and optocoupler isolation for noise-sensitive vibration, temperature, humidity, and acoustic channels. STM32 and Artemis firmware handled synchronized sampling, SD logging, and a touchscreen UI, streaming over RF to a handheld unit. MIL-STD-810G environmental conditions were the design target.",
+    "specs": [
+      { "k": "SENSORS", "v": "vib · temp · humid · acoustic" },
+      { "k": "MCU", "v": "STM32 · Artemis" },
+      { "k": "STAGE", "v": "breadboard prototype" },
+      { "k": "LINK", "v": "RF telemetry" }
+    ],
+    "tags": ["STM32", "PCB Design", "Signal Conditioning", "RF"],
+    "image": "/imgs/senior-design.jpg",
+    "links": []
+  },
+  {
+    "featured": false,
+    "title": "Arch Linux Dotfiles",
+    "status": "Personal",
+    "blurb": "A version-controlled Arch Linux setup for a fast, keyboard-driven development environment — an exercise in reproducible, scriptable configuration.",
+    "tags": ["Linux", "Bash", "Arch"],
+    "image": "/imgs/linux-dotfiles.jpg",
+    "links": [{ "label": "GitHub", "href": "https://github.com/boernerc20/dotfiles-arch" }]
+  },
+  {
+    "featured": false,
+    "title": "FPV Drone Design & Build",
+    "status": "Personal",
+    "blurb": "A 5-inch quad built from parts: soldered electronics, an ELRS radio link, GPS telemetry with battery fail-safes, and PID tuning for stabilized GoPro footage.",
+    "tags": ["FPV", "ELRS", "Soldering", "GPS"],
+    "image": "/imgs/fpv-drone.jpg",
+    "links": [{ "label": "YouTube", "href": "https://www.youtube.com/@krizzfpv" }]
+  },
+  {
+    "featured": false,
+    "title": "Ecodistrict Smart-Home Mockup",
+    "status": "G2Elab",
+    "blurb": "Photovoltaic-powered smart-home nodes publishing MQTT telemetry to a centralized Raspberry Pi energy manager, coordinated with a simulated solar source.",
+    "tags": ["Arduino", "ESP8266", "MQTT", "Raspberry Pi"],
+    "image": "/imgs/ecodistrict-mockup.jpg",
+    "links": [{ "label": "GitHub", "href": "https://github.com/boernerc20/tinyhouse" }]
+  }
+]

@@ -1,0 +1,111 @@
+/* ============================================================
+   Test Bench — design tokens (Blade Runner duotone)
+   Blue = signal (dominant). Pink = neon spark (accent).
+   Dark is the primary substrate; light is a cool technical mode.
+   ============================================================ */
+:root {
+  /* ── Substrate ── */
+  --bg:         #080B12;   /* deep blue-black */
+  --bg-1:       #0B0F19;   /* section alt */
+  --panel:      #111826;   /* instrument card */
+  --panel-2:    #161F31;   /* raised */
+  --line:       #223149;   /* hairline / trace base */
+  --line-soft:  #161F31;
+
+  /* ── Ink ── */
+  --text:       #E8EEF9;   /* cool silkscreen white */
+  --text-dim:   #94A3BC;   /* muted label */
+  --text-mut:   #7A8AA6;   /* faint / captions — AA on bg + panel */
+
+  /* ── Signal (electric azure-blue) ── */
+  --signal:      #2EC5FF;
+  --signal-ink:  #40CBFF;
+  --signal-dim:  #1E86B8;
+  --signal-deep: #135E86;
+
+  /* ── Neon (hot magenta-pink) ── */
+  --neon:      #FF3D9A;
+  --neon-dim:  #B12A6B;
+
+  /* ── Glows ── */
+  --glow:       rgba(46, 197, 255, 0.30);
+  --glow-soft:  rgba(46, 197, 255, 0.12);
+  --glow-neon:  rgba(255, 61, 154, 0.28);
+
+  /* ── Roles ── */
+  --accent:     var(--signal);
+  --accent-2:   var(--neon);
+  --border:     var(--line);
+  --card:       var(--panel);
+
+  /* ── Back-compat aliases (var() resolves per-theme) ── */
+  --cyan:       var(--signal);
+  --cyan-ink:   var(--signal-ink);
+  --cyan-dim:   var(--signal-dim);
+  --cyan-deep:  var(--signal-deep);
+  --copper:     var(--neon);
+  --copper-dim: var(--neon-dim);
+
+  /* ── Geometry ── */
+  --radius:     4px;
+  --radius-lg:  8px;
+  --maxw:       1120px;
+  --gutter:     clamp(1.25rem, 4vw, 3rem);
+  --hairline:   1px;
+
+  /* ── Type families ── */
+  --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-body:    'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-mono:    'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* ── Type scale ── */
+  --fs-xs:    0.75rem;
+  --fs-sm:    0.8125rem;
+  --fs-base:  1rem;
+  --fs-md:    1.125rem;
+  --fs-lg:    1.375rem;
+  --fs-xl:    clamp(1.75rem, 1.1rem + 2.6vw, 2.5rem);
+  --fs-2xl:   clamp(2.25rem, 1.2rem + 4vw, 3.5rem);
+  --fs-hero:  clamp(2.75rem, 1.2rem + 6.4vw, 5.5rem);
+
+  --lh-tight: 1.05;
+  --lh-snug:  1.25;
+  --lh-body:  1.6;
+
+  /* ── Motion ── */
+  --ease:     cubic-bezier(0.22, 1, 0.36, 1);
+  --dur:      0.32s;
+
+  /* ── Elevation ── */
+  --shadow:   0 1px 0 rgba(255,255,255,0.02), 0 12px 32px -12px rgba(0,0,0,0.6);
+
+  /* ── Duotone gradient (the one Blade Runner moment) ── */
+  --duo: linear-gradient(90deg, var(--signal), var(--neon));
+}
+
+/* ── Light mode: cool technical, not warm cream ── */
+:root[data-theme='light'] {
+  --bg:        #EEF1F7;
+  --bg-1:      #E6EBF3;
+  --panel:     #FFFFFF;
+  --panel-2:   #F3F6FB;
+  --line:      #D1DAE8;
+  --line-soft: #E0E6F0;
+
+  --text:      #0F1620;
+  --text-dim:  #45536B;
+  --text-mut:  #616C80;
+
+  --signal:      #0B6FAE;
+  --signal-ink:  #0A6595;
+  --signal-dim:  #0A6595;
+  --signal-deep: #0A5E94;
+  --neon:      #C41A74;
+  --neon-dim:  #A81A64;
+
+  --glow:      rgba(14, 128, 196, 0.22);
+  --glow-soft: rgba(14, 128, 196, 0.10);
+  --glow-neon: rgba(208, 30, 124, 0.18);
+
+  --shadow:    0 1px 0 rgba(0,0,0,0.02), 0 14px 34px -16px rgba(20,40,60,0.28);
+}
