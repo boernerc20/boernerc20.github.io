@@ -25,22 +25,22 @@ jobs:
     - name: Download latest resume from LaTeX-Resume repo
       run: |
         echo "Fetching latest resume..."
-        curl -L -o resume.pdf "https://github.com/boernerc20/LaTeX-Resume/raw/main/Christopher_Boerner_Resume.pdf"
+        curl -L -o public/resume.pdf "https://github.com/boernerc20/LaTeX-Resume/raw/main/Christopher_Boerner_Resume.pdf"
 
         echo "Resume downloaded successfully"
-        ls -lh resume.pdf
+        ls -lh public/resume.pdf
 
     - name: Check if resume changed
       id: check_changes
       run: |
-        git diff --exit-code resume.pdf || echo "changed=true" >> $GITHUB_OUTPUT
+        git diff --exit-code public/resume.pdf || echo "changed=true" >> $GITHUB_OUTPUT
 
     - name: Commit and push updated resume
       if: steps.check_changes.outputs.changed == 'true'
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add resume.pdf
+        git add public/resume.pdf
         git commit -m "chore: update resume from LaTeX-Resume repo
 
         Automatically synced from https://github.com/boernerc20/LaTeX-Resume
