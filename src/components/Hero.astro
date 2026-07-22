@@ -349,9 +349,14 @@ const consoleData = BOOT.map((t) => ({
   }
 
   @media (max-width: 800px) {
-    .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .scope { order: -1; }
+    /* Lead with who this is; the instrument follows as supporting evidence. */
+    .hero {
+      min-height: auto;
+      padding-block: clamp(4.5rem, 11vh, 6rem) clamp(1.5rem, 4vh, 2.5rem);
+    }
+    .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
     .hero-desc { max-width: none; }
+    .hero-name { font-size: clamp(2.5rem, 11vw, 3.5rem); }
   }
   @media (max-width: 560px) {
     .d-hex { display: none; }

@@ -125,7 +125,14 @@ import experience from '../data/experience.json';
     color: var(--signal);
   }
 
+  @media (max-width: 620px) {
+    /* narrow the rail so cards get the width back */
+    .log::before { left: 10px; }
+    .log-entry { grid-template-columns: 20px 1fr; gap: 0.85rem; }
+    .node { left: 10px; }
+  }
   @media (max-width: 560px) {
     .log-top { flex-direction: column; gap: 0.2rem; }
+    .log-role { font-size: var(--fs-md); }
   }
 </style>
