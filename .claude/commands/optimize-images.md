@@ -2,55 +2,61 @@
 description: Check and optimize images for better website performance
 ---
 
-You are helping optimize images for the portfolio website to improve loading performance.
+Audit and optimize assets in `public/`. ImageMagick (`magick`) is installed
+locally, so optimize directly rather than pointing at web tools.
 
 ## Instructions
 
-1. Scan the `imgs/` directory to find all image files
-2. Check file sizes using `ls -lh imgs/`
-3. Identify images larger than 500KB that should be optimized
-4. For each large image, suggest optimization strategies:
-   - Use online tools like TinyPNG, ImageOptim, or Squoosh
-   - Recommend WebP format for better compression
-   - Suggest appropriate dimensions (max 1920px width for full-width images)
-   - For thumbnails/cards, recommend 800px max width
+1. Inventory sizes:
+   ```bash
+   du -sh public/ && ls -lhS public/imgs/
+   ```
 
-5. Check if images are being used:
-   - Search for image filename in `index.html`
-   - List any unused images that could be removed
+2. Find **unused** images — these still ship, since everything in `public/` is
+   copied to `dist/`:
+   ```bash
+   npm run build
+   for f in public/imgs/*; do
+     n=$(basename "$f")
+     [ "$(grep -c "$n" dist/index.html)" -eq 0 ] && echo "UNUSED $n"
+   done
+   ```
+   Delete unused ones with `git rm` (recoverable from history).
 
-6. Provide optimization report:
-   - Total size of imgs/ directory
-   - List of images over 500KB
-   - Unused images
-   - Potential size savings
+3. Recompress anything oversized. Target ~800px wide, under ~150 KB:
+   ```bash
+   magick in.jpg -resize 800x -strip -quality 82 public/imgs/out.jpg
+   ```
+   To crop to the card ratio (16:10) around a subject:
+   ```bash
+   magick in.jpg -crop WxH+X+Y +repage -resize 800x -strip -quality 82 out.jpg
+   ```
 
-7. Ask if user wants help replacing optimized images
+4. For `.glb` models, Draco compression is dramatic (6.8 MB → 244 KB here):
+   ```bash
+   npx @gltf-transform/cli optimize in.glb out.glb --compress draco --texture-compress webp
+   ```
+   Always re-check the model still renders before keeping it, and re-tune
+   `camera-target` / `camera-orbit` in `Projects.astro`.
 
-## Image Size Guidelines
+5. Report before/after totals.
 
-- **Project cards**: 800px × 500px, <200KB
-- **Hero/header images**: 1920px × 1080px, <500KB
-- **Icons/small graphics**: 256px × 256px, <50KB
-- **Headshot**: 500px × 500px, <100KB
-- **3D models**: <10MB (consider hosting externally if larger)
+## Targets
 
-## Commands to Use
-
-```bash
-# Check total size
-du -sh imgs/
-
-# List files by size
-ls -lhS imgs/
-
-# Find large files
-find imgs/ -type f -size +500k -exec ls -lh {} \;
-```
+| Asset | Size |
+|---|---|
+| Project card / featured image (800px wide) | < 150 KB |
+| Headshot | < 100 KB |
+| 3D model (Draco-compressed) | < 500 KB |
+| Whole `dist/` | ~1–2 MB |
 
 ## Notes
 
-- Optimize images before committing to keep repository lean
-- GitHub has repository size limits
-- Faster loading improves user experience and SEO
-- Consider lazy loading for below-the-fold images
+- Images already use `loading="lazy"` and `decoding="async"`.
+- Fonts are self-hosted latin-only subsets; don't re-add full subsets.
+- Verify visually after optimizing — headless Chrome is available:
+  ```bash
+  google-chrome-stable --headless=new --no-sandbox --hide-scrollbars \
+    --virtual-time-budget=10000 --window-size=1280,6800 \
+    --screenshot=out.png http://localhost:4321/
+  ```

@@ -2,48 +2,39 @@
 description: Update work experience section on the website
 ---
 
-You are helping update the work experience section of the portfolio website.
+Update the experience timeline. It's data-driven — edit JSON, not markup.
 
 ## Instructions
 
-1. Ask the user what they want to update:
-   - Add a new position/company
-   - Update existing experience
-   - Reorder experiences
+1. Ask what's changing: a new role, updated bullets, new dates, or new tags.
 
-2. If adding new experience, collect:
-   - Company name
-   - Position/role title
-   - Date range (e.g., "June 2024 - Present")
-   - Key responsibilities (3-5 bullet points)
-   - Technologies used
-
-3. Edit `index.html`:
-   - Locate the experience section (search for `<section id="experience"`)
-   - Find the tab navigation and content area
-   - Add new tab button:
-   ```html
-   <button class="tab-btn" data-tab="company-name">Company Name</button>
-   ```
-   - Add corresponding content panel:
-   ```html
-   <div class="tab-content" id="company-name">
-     <h3>Position Title <span class="company">@ Company Name</span></h3>
-     <p class="date-range">Date Range</p>
-     <ul>
-       <li>Responsibility 1</li>
-       <li>Responsibility 2</li>
-       <li>Responsibility 3</li>
-     </ul>
-   </div>
+2. Edit `src/data/experience.json`. Entries render **in array order**, so the
+   newest role goes first. Each entry:
+   ```json
+   {
+     "designator": "EXP-01",
+     "role": "Electrical Engineer",
+     "org": "Northrop Grumman",
+     "note": "ESPAStar · ESPASat-L",
+     "start": "Nov 2025",
+     "end": "Present",
+     "location": "Dulles, VA",
+     "bullets": ["Achievement-oriented sentence."],
+     "tags": ["Avionics", "Python"]
+   }
    ```
 
-4. Verify the tab switching functionality works (check js/main.js if needed)
-5. Ask if the user wants to commit and deploy the changes
+3. When inserting a role at the top, **renumber the `designator` fields** so they
+   stay sequential (`EXP-01`, `EXP-02`, …).
+
+4. `note` is optional — use `null` when there's no sub-label.
+
+5. Verify with `npm run build`.
 
 ## Notes
 
-- Most recent experience should typically be first
-- Keep bullet points action-oriented and quantifiable
-- Ensure consistent formatting with existing entries
-- Tab IDs should be lowercase with hyphens (e.g., "virginia-tech")
+- 1–3 bullets per role, written as accomplishments.
+- Only real employment belongs here. Projects — including Senior Design and the
+  Master's project — go in `src/data/projects.json` instead.
+- If the change also affects the résumé, the source of truth is the separate
+  `LaTeX-Resume` repo; see the `update-resume` skill.

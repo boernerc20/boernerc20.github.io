@@ -1,59 +1,94 @@
-# Chris Boerner - Portfolio
+# boernerc20.me
 
-A clean, modern portfolio website showcasing my work as a computer engineer specializing in embedded systems, digital design, and electronics.
+Personal portfolio for Christopher Boerner — Electrical Engineer working avionics
+for the ESPASat-L space vehicles that dispense from Northrop Grumman's ESPAStar
+satellite bus.
 
-## Features
+Built with [Astro](https://astro.build), deployed to GitHub Pages at
+**[boernerc20.me](https://boernerc20.me)**.
 
-- **Responsive Design**: Works seamlessly on desktop and mobile
-- **Dark/Light Theme**: Toggle between themes with smooth transitions
-- **Dynamic Age Counter**: Real-time age calculation from birthdate
-- **Interactive Experience Tabs**: Showcase work history with smooth tab navigation
-- **Travel Map Placeholder**: Ready for future travel visualization feature
-- **Optimized Performance**: Fast loading with vanilla HTML, CSS, and JavaScript
+## Design: "Test Bench"
+
+The site is themed as a piece of lab equipment. The hero is an oscilloscope whose
+trace is a genuine UART encoding of the site's own boot log — start bit, 8 data
+bits LSB-first, stop bit — decoded live on screen beside the raw hex bytes.
+
+- **Substrate** — deep blue-black with a faint PCB ground-plane grid
+- **Signal blue** (`--signal`) carries live/interactive elements; **neon pink**
+  (`--neon`) is a sparing accent only
+- **Type** — Space Grotesk (display), IBM Plex Sans (body), IBM Plex Mono
+  (instrument labels), self-hosted latin subsets
+- Dark is primary; light mode is a cool technical white. All text pairs meet
+  WCAG AA in both themes.
+
+## Getting started
+
+```bash
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # -> dist/
+npm run preview  # serve the built output
+```
 
 ## Structure
 
 ```
-├── index.html          # Main page with all sections
-├── css/style.css       # Styling with CSS custom properties
-├── js/main.js          # Interactive functionality
-├── headshot.jpg        # Profile photo (circular crop)
-└── resume.pdf          # Downloadable resume
+src/
+  data/                 # ← content lives here, no markup needed
+    experience.json     #   roles, bullets, tags
+    projects.json       #   featured + grid projects
+    countries.json      #   travel list (drives the Beyond stat)
+  components/           # Nav, Hero, About, Experience, Projects, Beyond, Footer
+  layouts/Base.astro    # head, fonts, theme init, meta
+  pages/index.astro     # page assembly + scroll-reveal
+  styles/
+    tokens.css          # design tokens (colors, type scale, motion)
+    global.css          # reset, layout primitives, shared components
+public/                 # served at the site root
+  esp_clone.glb         # 3D PCB model (Draco-compressed)
+  resume.pdf            # synced from the LaTeX-Resume repo
+  imgs/, headshot.jpg, favicon.*, CNAME
 ```
 
-## Sections
+## Editing content
 
-- **Hero**: Introduction with dynamic age counter and social links
-- **About**: Personal description with circular headshot and travel map placeholder  
-- **Experience**: Professional history with interactive tabs (Virginia Tech, Grenoble EE Lab, Deloitte, SSRG)
-- **Projects**: Portfolio showcase with placeholder project cards
-- **Footer**: Copyright and contact information
+Most updates need no markup changes:
 
-## Quick Start
+| To change | Edit |
+|---|---|
+| A project's title, blurb, specs, tags, links | `src/data/projects.json` |
+| Which projects are large case studies | `featured: true/false` (array order sets display order) |
+| Work history | `src/data/experience.json` |
+| Countries visited | `src/data/countries.json` |
+| Hero copy / boot-log lines | `src/components/Hero.astro` |
+| Colors, spacing, type scale | `src/styles/tokens.css` |
 
-1. Clone the repository
-2. Update personal information in `index.html`
-3. Replace `headshot.jpg` with your photo
-4. Add your `resume.pdf`
-5. Deploy to GitHub Pages or your preferred hosting
+Adding an image: drop it in `public/imgs/` and reference it as `/imgs/name.jpg`.
 
-## Customization
+## Deployment
 
-- **Personal Info**: Update name, description, and social links in the hero section
-- **Work Experience**: Modify the experience tabs with your professional history
-- **Projects**: Replace placeholder project cards with your actual work
-- **Colors**: Customize the color scheme using CSS custom properties in `style.css`
-- **Travel Map**: The placeholder is ready for future implementation
+Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds with Astro
+and publishes `dist/` to GitHub Pages. Feature branches never deploy.
 
-## Live Demo
+`.github/workflows/sync-resume.yml` pulls the latest PDF from
+[LaTeX-Resume](https://github.com/boernerc20/LaTeX-Resume) into
+`public/resume.pdf` on a weekly schedule (or manual dispatch) and commits it,
+which in turn triggers a redeploy.
 
-Visit the live site at: `https://boernerc20.me`
+## Notes
+
+- The 3D model is Draco-compressed (6.8 MB → 244 KB). Re-compress any
+  replacement with
+  `npx @gltf-transform/cli optimize in.glb out.glb --compress draco`, then update
+  `camera-target` / `camera-orbit` in `Projects.astro` to frame it.
+- `model-viewer` loads from a CDN only once the model nears the viewport.
+- Scroll-reveal, the 3D auto-rotate, and all animation respect
+  `prefers-reduced-motion`.
 
 ---
 
-Built using vanilla HTML, CSS, and JavaScript
-Inspired by these sites:
-- `https://v4.brittanychiang.com/`
-- `https://saahild.com/`
-- `https://matthiaskretschmann.com/`
-- `https://ellishw.tech/`
+Originally a vanilla HTML/CSS/JS site inspired by
+[brittanychiang](https://v4.brittanychiang.com/),
+[saahild](https://saahild.com/),
+[matthiaskretschmann](https://matthiaskretschmann.com/), and
+[ellishw](https://ellishw.tech/); rebuilt in Astro in 2026.

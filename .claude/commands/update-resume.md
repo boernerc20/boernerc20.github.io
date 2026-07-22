@@ -2,29 +2,49 @@
 description: Pull latest resume from LaTeX-Resume repo
 ---
 
-You are helping update the resume.pdf file by pulling the latest version from the LaTeX-Resume GitHub repository.
+Refresh `public/resume.pdf` from the `LaTeX-Resume` repo, which is the source of
+truth for the résumé.
 
 ## Instructions
 
-1. Fetch the latest resume PDF from the LaTeX-Resume repository:
-   - Repository: https://github.com/boernerc20/LaTeX-Resume
-   - File: Boerner_Christopher_Resume.pdf
-   - Raw URL: https://github.com/boernerc20/LaTeX-Resume/raw/main/Boerner_Christopher_Resume.pdf
-
-2. Download the file and save it as `resume.pdf` in the repository root:
+1. Download the latest PDF. **The filename is `Christopher_Boerner_Resume.pdf`**
+   (given-name first — an earlier version of this skill had it reversed, which
+   silently returned a 404 HTML page):
    ```bash
-   curl -L -o resume.pdf "https://github.com/boernerc20/LaTeX-Resume/raw/main/Boerner_Christopher_Resume.pdf"
+   curl -fL -o public/resume.pdf \
+     "https://raw.githubusercontent.com/boernerc20/LaTeX-Resume/main/Christopher_Boerner_Resume.pdf"
    ```
 
-3. Verify the download was successful:
-   - Check file size is reasonable (should be 50-200KB typically)
-   - Show the file size and last modified date
+2. **Verify it's actually a PDF**, not an error page:
+   ```bash
+   file public/resume.pdf          # must say "PDF document"
+   pdfinfo public/resume.pdf | grep -i '^pages'
+   ```
+   A 404 lands as a ~300 KB HTML file — always check before committing.
 
-4. Ask the user if they want to commit and deploy the updated resume
+3. Confirm the content is current (role, employer, dates):
+   ```bash
+   pdftotext public/resume.pdf - | head -20
+   ```
+
+4. Ask the user whether to commit.
+
+## Editing the résumé itself
+
+The PDF is generated, so never hand-edit it. To change content:
+
+1. Clone `https://github.com/boernerc20/LaTeX-Resume`
+2. Edit `Christopher_Boerner_Resume.tex`
+3. Rebuild: `pdflatex -interaction=nonstopmode Christopher_Boerner_Resume.tex`
+4. **Check it's still one page** — `pdfinfo … | grep Pages`. The Projects section
+   uses unsplittable `minipage` blocks, so adding a couple of lines to Experience
+   silently pushes Projects onto page 2. Render and look:
+   `pdftoppm -png -r 95 -f 1 -l 1 file.pdf out`
+5. Commit and push both the `.tex` and the `.pdf`, then re-run step 1 here.
 
 ## Notes
 
-- The resume link in index.html (line 52) already points to resume.pdf
-- Keep the download attribute as "Chris_Boerner_Resume.pdf" for user-friendly filename
-- The resume.pdf file is tracked in git, so changes will be committed
-- This can also be automated via GitHub Actions (see .github/workflows/sync-resume.yml)
+- The site link is `/resume.pdf` (served from `public/`), with the download
+  attribute `Chris_Boerner_Resume.pdf`.
+- `.github/workflows/sync-resume.yml` automates this weekly.
+- Keep the résumé's claims consistent with `src/data/` copy on the site.

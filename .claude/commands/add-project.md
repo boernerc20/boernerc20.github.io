@@ -2,53 +2,67 @@
 description: Add a new project to the portfolio website
 ---
 
-You are helping add a new project to the portfolio website.
+Add a project to the Astro portfolio. Projects are data-driven — you edit JSON,
+not markup.
 
 ## Instructions
 
-1. Ask the user for the following project details:
-   - Project name
-   - Brief description (2-3 sentences)
-   - Technologies used (e.g., React, Python, AWS)
-   - GitHub repository URL
-   - Project image (path or if they need to add one)
-   - Live demo URL (optional)
+1. Ask the user for: title, short blurb, tech tags, any links (GitHub, live demo,
+   video), and whether it should be a **featured case study** or a **compact grid
+   card**.
 
-2. If an image needs to be added:
-   - Remind the user to add it to the `imgs/` directory
-   - Suggest optimizing the image (recommend <500KB)
-   - Use descriptive filename (e.g., `project-name.png`)
+2. If it's featured, also gather: a `status` line (e.g. `Personal · KiCad`), a
+   longer `detail` paragraph (problem → approach → result), and 3–4
+   datasheet-style specs.
 
-3. Edit `index.html`:
-   - Locate the projects section (search for `<section id="projects"`)
-   - Find the project grid container
-   - Add a new project card following the existing pattern:
-   ```html
-   <div class="project-card">
-     <img src="imgs/project-image.png" alt="Project Name">
-     <h3>Project Name</h3>
-     <p>Project description here...</p>
-     <div class="project-tech">
-       <span>Technology1</span>
-       <span>Technology2</span>
-     </div>
-     <div class="project-links">
-       <a href="https://github.com/user/repo" target="_blank">
-         <i class="fab fa-github"></i> GitHub
-       </a>
-       <a href="https://demo-url.com" target="_blank">
-         <i class="fas fa-external-link-alt"></i> Live Demo
-       </a>
-     </div>
-   </div>
+3. Add an image to `public/imgs/` and reference it as `/imgs/name.jpg`. Crop to
+   roughly 16:10 and keep it under ~150 KB:
+   ```bash
+   magick source.jpg -resize 800x -strip -quality 82 public/imgs/name.jpg
    ```
 
-4. Verify the changes look correct
-5. Ask if the user wants to commit and deploy the changes now
+4. Add an entry to `src/data/projects.json`. **Array order controls display
+   order**; `featured` controls which section it lands in.
+
+   Featured (large case-study row):
+   ```json
+   {
+     "featured": true,
+     "title": "Project Name",
+     "status": "Personal · KiCad",
+     "blurb": "One-sentence hook.",
+     "detail": "A longer paragraph on approach and outcome.",
+     "specs": [
+       { "k": "TOOL", "v": "KiCad" },
+       { "k": "OUTPUT", "v": "schematic → Gerber" }
+     ],
+     "tags": ["KiCad", "ESP32"],
+     "image": "/imgs/name.jpg",
+     "links": [{ "label": "GitHub", "href": "https://github.com/..." }]
+   }
+   ```
+
+   Grid card (compact) — no `detail` or `specs`:
+   ```json
+   {
+     "featured": false,
+     "title": "Project Name",
+     "status": "Personal",
+     "blurb": "Two sentences max.",
+     "tags": ["Linux", "Bash"],
+     "image": "/imgs/name.jpg",
+     "links": [{ "label": "GitHub", "href": "https://github.com/..." }]
+   }
+   ```
+
+5. A 3D model can replace the image via `"model": "/file.glb"`. Compress it first
+   (`npx @gltf-transform/cli optimize in.glb out.glb --compress draco`) and set
+   `camera-target` / `camera-orbit` in `src/components/Projects.astro` to frame it.
+
+6. Verify with `npm run build`, then check it on the dev server (`npm run dev`).
 
 ## Notes
 
-- Maintain consistent styling with existing projects
-- Ensure image paths are correct (case-sensitive)
-- Keep descriptions concise but informative
-- Test locally by opening index.html in browser before deploying
+- Keep roughly 3 featured projects; more dilutes the section.
+- `links: []` is valid — the card renders without link buttons.
+- Do **not** edit `src/components/Projects.astro` for content changes.

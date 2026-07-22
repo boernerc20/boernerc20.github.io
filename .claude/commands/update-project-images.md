@@ -2,51 +2,52 @@
 description: Update images and details for existing projects
 ---
 
-You are helping update images, descriptions, or other details for existing projects on the portfolio website.
+Update an existing project's image or copy. All project content lives in
+`src/data/projects.json`.
 
 ## Instructions
 
-1. Ask the user which project(s) they want to update:
-   - List current projects by reading the projects section in index.html
-   - Let them specify which project to modify
+1. List the current projects so the user can pick one:
+   ```bash
+   grep '"title"' src/data/projects.json
+   ```
 
-2. For each project update, ask what they want to change:
-   - Replace project image
-   - Update description
-   - Change technologies used
-   - Update GitHub/demo links
-   - Modify project title
+2. Ask what's changing — image, blurb/detail, specs, tags, links, or whether it
+   should move between featured and the grid.
 
-3. If updating images:
-   - Ask for the new image file name/path
-   - Verify the image exists in imgs/ directory (use ls imgs/)
-   - Remind them to optimize large images (recommend <500KB)
-   - Update the img src attribute in index.html
+### Replacing an image
 
-4. If updating other details:
-   - Read the current project card HTML
-   - Show them the current values
-   - Make the requested changes while maintaining consistent formatting
+3. Optimize the new file into `public/imgs/` (ImageMagick is installed). Featured
+   and card images both render at 16:10, so crop to that around the subject:
+   ```bash
+   magick source.jpg -crop WxH+X+Y +repage -resize 800x -strip -quality 82 \
+     public/imgs/name.jpg
+   ```
+   Keep it under ~150 KB. To find crop coordinates, view the source first and
+   pick a box centered on the subject.
 
-5. Process for updating in index.html:
-   - Search for the project by name or current image filename
-   - Locate the project card div
-   - Update the relevant fields (img src, description, tech tags, links)
-   - Preserve the HTML structure and classes
+4. Update the `"image"` field in `src/data/projects.json` (path is `/imgs/name.jpg`).
 
-6. After making changes:
-   - Show a summary of what was updated
-   - Ask if they want to commit and deploy changes
+5. `git rm` the old image if nothing else references it.
 
-## Common Image Locations
+### Changing copy
 
-Project images should be in `imgs/` directory:
-- Current images: ecodistrict-mockup.png, masters-project.png, senior-design.png, pcb-learning.png, linux-dotfiles.png, minecraft-jukebox.jpg
+6. Edit the entry's fields directly:
+   - `blurb` — one-sentence hook (both layouts)
+   - `detail` — longer paragraph (featured only)
+   - `specs` — 3–4 `{ "k": …, "v": … }` datasheet rows (featured only)
+   - `tags`, `links`, `status`
+   - `featured` — moves it between the case-study rows and the compact grid
+
+7. Verify with `npm run build`, then confirm visually on the dev server.
 
 ## Notes
 
-- Keep image filenames descriptive and lowercase with hyphens
-- Maintain consistent image aspect ratios (roughly 16:9 works well)
-- Optimize images before adding them to the repository
-- Test that image paths are correct (case-sensitive)
-- Ensure project cards remain visually consistent
+- Never edit `src/components/Projects.astro` for content — it's layout only.
+- Keep claims accurate; prefer understating what a prototype achieved.
+- Screenshot to confirm framing:
+  ```bash
+  google-chrome-stable --headless=new --no-sandbox --hide-scrollbars \
+    --virtual-time-budget=10000 --window-size=1280,6800 \
+    --screenshot=out.png http://localhost:4321/
+  ```

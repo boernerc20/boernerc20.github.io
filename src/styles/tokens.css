@@ -38,14 +38,6 @@
   --border:     var(--line);
   --card:       var(--panel);
 
-  /* ── Back-compat aliases (var() resolves per-theme) ── */
-  --cyan:       var(--signal);
-  --cyan-ink:   var(--signal-ink);
-  --cyan-dim:   var(--signal-dim);
-  --cyan-deep:  var(--signal-deep);
-  --copper:     var(--neon);
-  --copper-dim: var(--neon-dim);
-
   /* ── Geometry ── */
   --radius:     4px;
   --radius-lg:  8px;

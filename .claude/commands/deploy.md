@@ -2,32 +2,56 @@
 description: Commit and deploy website changes to GitHub Pages
 ---
 
-You are helping deploy changes to the personal portfolio website hosted on GitHub Pages.
+Deploy the Astro portfolio. Pushing to `main` triggers
+`.github/workflows/deploy.yml`, which builds with Astro and publishes `dist/`.
 
 ## Instructions
 
-1. Run `git status` to see all changed files
-2. Run `git diff` to show the changes made
-3. Review the changes and create a clear, descriptive commit message following conventional commits format:
-   - `feat:` for new features
-   - `fix:` for bug fixes
-   - `style:` for styling changes
-   - `content:` for content updates
-   - `docs:` for documentation
-4. Stage all relevant changes with `git add`
-5. Create a commit with an appropriate message that includes the Claude Code co-author:
+1. **Build first** — a broken build means a failed deploy:
+   ```bash
+   npm run build
    ```
-   🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
-   Co-Authored-By: Claude <noreply@anthropic.com>
+2. Review what's changing:
+   ```bash
+   git status && git diff
    ```
-6. Push to the main branch: `git push origin main`
-7. Confirm that the changes have been pushed successfully
-8. Remind the user that changes will be live at https://boernerc20.me within 1-2 minutes
 
-## Important Notes
+3. Confirm the branch. Feature branches never deploy; only `main` does.
+   If the user is on a feature branch and wants to go live, confirm explicitly
+   before merging.
 
-- Only commit files that should be deployed
-- Check for any large binary files before committing
-- Ensure CNAME file is not accidentally deleted
-- Verify HTML/CSS/JS syntax before pushing
+4. Stage and commit with a clear message describing *why*, ending with:
+   ```
+   Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>
+   ```
+
+5. Push. If deploying, push/merge to `main`.
+
+6. Watch the run:
+   ```bash
+   gh run list --limit 3
+   gh run watch
+   ```
+
+7. Confirm the site is live at https://boernerc20.me (allow a minute or two).
+
+## Before the first Actions deploy
+
+GitHub Pages must be switched from serving files directly off `main` to running
+the workflow. Check current state:
+```bash
+gh api repos/boernerc20/boernerc20.github.io/pages | grep build_type
+```
+If it reports `"build_type": "legacy"`, the order matters — **merge to `main`
+first, then** switch to `workflow`:
+```bash
+gh api -X PUT repos/boernerc20/boernerc20.github.io/pages -f build_type=workflow
+```
+Flipping it before `main` has the workflow leaves Pages with nothing to serve.
+
+## Notes
+
+- `public/CNAME` must keep `boernerc20.me` — losing it drops the custom domain.
+- Never commit `dist/` or `node_modules/` (both gitignored).
+- Large binaries: compress `.glb` files before committing (see `optimize-images`).
